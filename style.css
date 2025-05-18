@@ -3,6 +3,8 @@ body, html {
   padding: 0;
   font-family: 'Quicksand', sans-serif;
   scroll-behavior: smooth;
+  background-color: skyblue;
+  text-align: center;
 }
 
 .image-container {
@@ -86,4 +88,85 @@ button:hover {
 
 .hidden {
   display: none;
+}
+
+.link-button {
+  display: inline-block;
+  padding: 15px 30px;
+  background-color: #4dd0e1;
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.link-button:hover {
+  transform: scale(1.1);
+  background-color: #26c6da;
+}
+
+.superlink {
+  text-align: center;
+  margin-top: 40px;
+}
+
+a {
+  color: #295c8f;
+  text-decoration: none;
+  margin-right: 50px;
+  text-align: right;
+}
+
+a:hover {
+  color: #46A3FF	;
+}
+
+.text-on-img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* 讓文字更清楚 */
+}
+
+.MiyuAys, .Skletona, .Canshark {
+  width: 10%;
+  height: 10%;
+  border-radius: 100%;
+}
+
+.container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .container img {
+    width: 150px; /* 控制圖片大小 */
+    height: auto;
+}
+
+.image-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;   /* 水平置中 */
+      width: 200px;          /* 可依需求調整 */
+      margin: 20px auto;     /* 自動左右置中 */
+      text-align: center;    /* 讓文字內容置中 */
+    }
+
+    .image-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .caption {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #555;
 }

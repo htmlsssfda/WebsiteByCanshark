@@ -5,9 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Relax-Island / 休憩島</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <header>
+    <nav>
+      <a href="website/introduction.html">伺服器介紹<i class="ri-external-link-line"></i></a>
+      <a href="website/FAQ.html">FAQ <i class="ri-external-link-line"></i></a>
+      <a href="website/intro-of-us.html">關於我們 <i class="ri-external-link-line"></i></a>
+    </nav>
+  </header>
   <div class="image-container">
     <img src="images/banner-1.png" alt="背景圖片" />
     <div class="overlay">
@@ -19,8 +27,8 @@
   <h1 id="welcomeText"></h1>
   <blockquote id="question1" class="question-block"></blockquote>
   <div class="button-container hidden" id="first-buttons">
-    <button onclick="goToSecond()">是</button>
-    <button onclick="goToSecond()">不是</button>
+    <button onclick="goToSecond()">對呀</button>
+    <button onclick="goToSecond()">沒 不想看:3</button>
   </div>
 </div>
 
@@ -33,8 +41,12 @@
   <blockquote id="response" class="response-text hidden"></blockquote>
 </div>
 
-<a href="website/introduction.html">伺服器介紹(尚未完工)</a>
-
+<div class="superlink hidden" id="link-container">
+  <a href="website/introduction.html" class="link-button" target="_blank">
+    伺服器介紹（尚未完工）
+  </a>
+</div>
+  © 2025 Relax-Island. All rights reserved.
   <script src="script.js"></script>
 </body>
 </html>

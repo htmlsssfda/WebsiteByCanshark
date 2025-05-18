@@ -26,39 +26,38 @@ function goToSecond() {
   // 隱藏第一段按鈕
   document.getElementById("first-buttons").classList.add("hidden");
 
-  // 顯示第二段
+  // 顯示第二段區塊
   const second = document.getElementById("second-section");
   second.classList.remove("hidden");
 
-  // 啟動第二段打字 + 滑動
+  // 啟動打字效果 + 自動滑動
   typeWriter("你有在玩 Minecraft 嗎？", "question2", 60, () => {
     document.getElementById("second-buttons").classList.remove("hidden");
-    
-    // 自動滑動到第二段
-    setTimeout(() => {
-      second.scrollIntoView({ behavior: 'smooth' });
-    }, 100); // 稍微延遲一點點，讓 UI 有時間更新
   });
+
+  // 立刻自動滑動
+  setTimeout(() => {
+    second.scrollIntoView({ behavior: 'smooth' });
+  }, 100); // 小延遲讓內容有時間顯示
 }
 
-function answerYes() {
-  document.getElementById("second-buttons").classList.add("hidden");
-  const response = document.getElementById("response");
-  response.classList.remove("hidden");
-  response.innerText = "那歡迎加入我們的伺服器！";
 
-  setTimeout(() => {
-    response.scrollIntoView({ behavior: 'smooth' });
-  }, 200);
+function answerYes() {
+  const response = document.getElementById("response");
+  response.textContent = "那歡迎加入我們的伺服器！";
+  response.style.display = "block";
+
+  const linkContainer = document.getElementById("link-container");
+  linkContainer.classList.remove("hidden");
+  linkContainer.scrollIntoView({ behavior: "smooth" });
 }
 
 function answerNo() {
-  document.getElementById("second-buttons").classList.add("hidden");
   const response = document.getElementById("response");
-  response.classList.remove("hidden");
-  response.innerText = "沒關係，我們歡迎新手加入喲！";
+  response.textContent = "沒關係，我們歡迎新手加入喲！";
+  response.style.display = "block";
 
-  setTimeout(() => {
-    response.scrollIntoView({ behavior: 'smooth' });
-  }, 200);
+  const linkContainer = document.getElementById("link-container");
+  linkContainer.classList.remove("hidden");
+  linkContainer.scrollIntoView({ behavior: "smooth" });
 }
