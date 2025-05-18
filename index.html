@@ -1,14 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
-  <title>Relax-Island/休憩島 - 建築玩家最愛的伺服器</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Relax-Island / 休憩島</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <div class="image-container">
+    <img src="images/banner-1.png" alt="背景圖片" />
+    <div class="overlay">
+      <div class="typewriter-text" id="welcomeText"></div>
+    </div>
+  </div>
+
+<div id="first-section" class="content">
+  <h1 id="welcomeText"></h1>
+  <blockquote id="question1" class="question-block"></blockquote>
+  <div class="button-container hidden" id="first-buttons">
+    <button onclick="goToSecond()">是</button>
+    <button onclick="goToSecond()">不是</button>
+  </div>
+</div>
+
+<div id="second-section" class="content hidden">
+  <blockquote id="question2" class="question-block"></blockquote>
+  <div class="button-container hidden" id="second-buttons">
+    <button onclick="answerYes()">有玩</button>
+    <button onclick="answerNo()">沒有玩</button>
+  </div>
+  <blockquote id="response" class="response-text hidden"></blockquote>
+</div>
+
+<a href="website/introduction.html">伺服器介紹(尚未完工)</a>
+
   <script src="script.js"></script>
 </body>
 </html>
