@@ -19,4 +19,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   fetchSubscribers();
   setInterval(fetchSubscribers, 10000);
+
+  // 打字動畫結束後移除游標動畫
+  const el = document.querySelector('.typewriter');
+  el.addEventListener('animationend', (e) => {
+    if (e.animationName === 'typing') {
+      el.style.borderRight = 'none';
+      el.style.animation = 'none';
+    }
+  });
+
+  // 滑動時觸發動畫
+  const subs = document.querySelector('.subs-count');
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          subs.classList.add('animate');
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+  observer.observe(subs);
 });

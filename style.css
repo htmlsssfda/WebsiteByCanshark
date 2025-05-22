@@ -1,73 +1,194 @@
-body {
-  font-family: "Quicksand", sans-serif;
-  background-color: #87CEEB;
-  margin: 0;
-  padding: 0;
-}
-
-/* 導覽列 */
-nav {
-  background-color: #7DF9FF;
-  margin-top: -10px;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-/* 導覽圖片 */
-.nav-image {
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-  object-fit: cover;
-}
-
-/* 連結樣式 */
 a {
+  font-size: 1rem;
+  margin-left: 20px;
   position: relative;
   text-decoration: none;
   color: #007bff;
-  margin-left: 20px;
-  font-size: 1rem;
 }
 
 a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 0;
-  height: 2px;
   background: #007bff;
+  bottom: -3px;
+  content: '';
+  height: 2px;
+  left: 0;
+  position: absolute;
   transition: width 0.3s ease;
+  width: 0;
 }
 
 a:hover::after {
   width: 100%;
 }
 
-/* 響應式：螢幕小於 768px 時調整排版 */
-@media (max-width: 768px) {
-  nav {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+/* 連結共用基本樣式 */
+a.yt-link, a.dc-link {
+  position: relative;
+  color: #007bff;
+  text-decoration: none;
+  padding-right: 50px; /* 留空間放頭像 */
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+}
 
+/* 頭像共用樣式 */
+a.yt-link .yt-avatar,
+a.dc-link .dc-avatar {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* hover 顯示頭像 */
+a.yt-link:hover .yt-avatar,
+a.dc-link:hover .dc-avatar {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+
+blockquote {
+  background-color: lightgray;
+  border-radius: 16px;
+}
+
+body {
+  background-color: #87CEEB;
+  font-family: "Quicksand", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.main-text {
+  text-align: center;
+}
+
+/* ----- Nav 區塊 ----- */
+nav {
+  align-items: center;
+  background-color: #7DF9FF;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: -10px;
+  padding: 10px 20px;
+}
+
+.nav-image {
+  border-radius: 100%;
+  height: 50px;
+  margin-bottom: 0;
+  object-fit: cover;
+  width: 50px;
+}
+
+#subscriber-count {
+  color: #333;
+  font-weight: bold;
+  margin-left: auto;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+/* ----- 訂閱數區塊 ----- */
+.subs-count {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 100px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease;
+}
+
+.subs-count.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.subs-count .text-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.subs-count h2, .subs-count h3 {
+  margin: 0;
+}
+
+/* ----- 打字機動畫 ----- */
+.typewriter {
+  display: inline-block;
+  overflow: hidden;
+  border-right: 2px solid black;
+  white-space: nowrap;
+  animation:
+    typing 2s steps(10) forwards,
+    blink 0.7s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 10ch;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* ----- 響應式 ----- */
+@media (max-width: 768px) {
   a {
     margin: 10px 0;
+  }
+
+  nav {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .nav-image {
     margin-bottom: 10px;
   }
-}
 
-#subscriber-count {
-  margin-left: auto;
-  font-weight: bold;
-  color: #333;
-  padding: 0 10px;
-  white-space: nowrap;
+  main {
+    padding: 40px 10px;
+  }
+
+  .subs-count {
+    flex-direction: column;
+    text-align: center;
+  }
 }
