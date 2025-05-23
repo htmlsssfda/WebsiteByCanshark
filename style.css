@@ -71,6 +71,67 @@ body {
   padding: 0;
 }
 
+.family-image {
+  text-align: center; /* 將圖片置中 */
+  margin: 20px 0;
+}
+
+.family-image img {
+  width: 60%; /* 根據需要調整大小，例如 60%、300px 等 */
+  max-width: 400px; /* 最大寬度限制 */
+  height: auto;
+  border-radius: 12px; /* 可選：圓角 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 可選：陰影 */
+}
+
+.friends {
+  display: flex;
+  flex-direction: row;     /* 橫向排列 */
+  justify-content: center; /* 水平置中 */
+  gap: 20px;               /* 卡片之間距離 */
+  padding: 20px;
+  flex-wrap: wrap;         /* 螢幕太小就自動換行 */
+}
+
+.friend-card {
+  background-color: #f0f8ff;
+  border-radius: 16px;
+  padding: 16px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.friend-card:hover {
+  transform: translateY(-5px);
+}
+
+.friend-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.friend-card h1 {
+  font-size: 1.2rem;
+  margin: 5px 0;
+}
+
+.friend-card h2 {
+  font-size: 1rem;
+  color: #555;
+  margin: 5px 0 10px;
+}
+
+.friend-card a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+
 .link {
     text-align: center;
     margin-top: 20px;
