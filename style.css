@@ -214,6 +214,27 @@ nav {
   margin: 5px 0;
 }
 
+.quetion {
+  text-align: center;
+}
+
+.quetion button {
+  width: 150px;
+  height: 50px;
+  background-color: #3498db;   /* 淺藍（主色） */
+  color: white;                /* 白色文字 */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.quetion button:hover {
+  background-color: #2980b9;
+}
+
 #subscriber-count {
   color: #333;
   font-weight: bold;
