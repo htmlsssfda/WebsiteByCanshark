@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>註冊</title>
+</head>
+<body>
+  <h1>註冊</h1>
+  <form id="register-form">
+    <label>帳號：<input type="text" id="username" required></label><br>
+    <label>密碼：<input type="password" id="password" required></label><br>
+    <label>暱稱：<input type="text" id="nickname" required></label><br>
+    <button type="submit">註冊</button>
+  </form>
+
+  <p id="message" style="color:red;"></p>
+
+  <script>
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const nickname = document.getElementById('nickname').value;
+
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, nickname })
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        // 註冊成功，導向登入頁
+        window.location.href = '/login/login.html';
+      } else {
+        // 註冊失敗
+        document.getElementById('message').textContent = result.error;
+      }
+    });
+  </script>
+</body>
+</html>
