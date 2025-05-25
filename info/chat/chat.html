@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>討厭貓貓的聊天室D:</title>
+</head>
+<body>
+  <h1>聊天室</h1>
+  <div id="chat-box" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll;"></div>
+
+  <input type="text" id="message-input" placeholder="輸入訊息">
+  <button onclick="sendMessage()">送出</button>
+
+  <script>
+    async function fetchMessages() {
+      const res = await fetch('/messages');
+      const messages = await res.json();
+      const box = document.getElementById('chat-box');
+      box.innerHTML = messages.map(msg => `<p><strong>${msg.id}</strong>: ${msg.text}</p>`).join('');
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('message-input');
+      const text = input.value;
+      await fetch('/messages', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ text })
+      });
+      input.value = '';
+      fetchMessages();
+    }
+
+    setInterval(fetchMessages, 1000); // 每秒更新
+  </script>
+</body>
+</html>
