@@ -21,25 +21,30 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(fetchSubscribers, 10000);
 
   // 打字動畫結束後移除游標動畫
-  const el = document.querySelector('.typewriter');
-  el.addEventListener('animationend', (e) => {
-    if (e.animationName === 'typing') {
-      el.style.borderRight = 'none';
-      el.style.animation = 'none';
+  const typewriterEl = document.querySelector('.typewriter');
+  if (typewriterEl) {
+    typewriterEl.addEventListener('animationend', (e) => {
+      if (e.animationName === 'typing') {
+        typewriterEl.style.borderRight = 'none';
+        typewriterEl.style.animation = 'none';
+      }
+    });
+  }
+
+  // 一起監控三個元素的動畫觸發：main-text, subs-count, text-group（電腦配備）
+  const selectors = ['.main-text.hidden', '.subs-count', '.text-group.hidden'];
+  selectors.forEach(selector => {
+    const el = document.querySelector(selector);
+    if (el) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            el.classList.add('animate');
+            el.classList.remove('hidden');
+          }
+        });
+      }, { threshold: 0.5 });
+      observer.observe(el);
     }
   });
-
-  // 滑動時觸發動畫
-  const subs = document.querySelector('.subs-count');
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          subs.classList.add('animate');
-        }
-      });
-    },
-    { threshold: 0.5 }
-  );
-  observer.observe(subs);
 });
