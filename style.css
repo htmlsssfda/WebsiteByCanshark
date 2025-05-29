@@ -18,7 +18,7 @@ a::after {
 }
 
 a:hover::after {
-  width: 100%;
+  width: 97%;
 }
 
 /* 連結共用基本樣式 */
@@ -218,21 +218,26 @@ nav {
   text-align: center;
 }
 
-.quetion button {
+button {
   width: 150px;
   height: 50px;
-  background-color: #3498db;   /* 淺藍（主色） */
+  background-color: #007bff;;   /* 淺藍（主色） */
   color: white;                /* 白色文字 */
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: none;    
 }
 
-.quetion button:hover {
-  background-color: #2980b9;
+.main {
+  text-align: center;
+}
+
+.profile {
+  width: 150px;
+  border-radius: 100%;
 }
 
 #subscriber-count {
