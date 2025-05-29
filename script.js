@@ -9,8 +9,21 @@ document.addEventListener('DOMContentLoaded', () => {
         `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${apiKey}`
       );
       const data = await response.json();
-      const count = data.items[0].statistics.subscriberCount;
-      countElement.textContent = `🎥 訂閱人數：${Number(count).toLocaleString()} 人`;
+      const count = parseInt(data.items[0].statistics.subscriberCount);
+      countElement.textContent = `🎥 訂閱人數：${count.toLocaleString()} 人`;
+
+      // 🔓 解鎖里程碑
+      const milestones = document.querySelectorAll('.milestone');
+      milestones.forEach(milestone => {
+        const requiredSubs = parseInt(milestone.dataset.subs);
+        if (count >= requiredSubs) {
+          milestone.classList.remove('locked');
+          milestone.classList.add('unlocked');
+        } else {
+          milestone.classList.remove('unlocked');
+          milestone.classList.add('locked');
+        }
+      });
     } catch (error) {
       countElement.textContent = '⚠️ 訂閱數讀取失敗';
       console.error('讀取訂閱數時發生錯誤：', error);
@@ -18,9 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   fetchSubscribers();
-  setInterval(fetchSubscribers, 10000);
+  setInterval(fetchSubscribers, 10000); // 每 10 秒更新一次
 
-  // 打字動畫結束後移除游標動畫
+  // ✨ 打字動畫結束後移除游標動畫（如果有）
   const typewriterEl = document.querySelector('.typewriter');
   if (typewriterEl) {
     typewriterEl.addEventListener('animationend', (e) => {
@@ -31,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 一起監控三個元素的動畫觸發：main-text, subs-count, text-group（電腦配備）
+  // 👁️‍🗨️ 元素出現時觸發動畫（main-text, subs-count, text-group）
   const selectors = ['.main-text.hidden', '.subs-count', '.text-group.hidden'];
   selectors.forEach(selector => {
     const el = document.querySelector(selector);
@@ -48,3 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// 👇 里程碑展開/收起功能
+// 👇 里程碑展開/收起功能（動畫版）
+const toggleBtn = document.getElementById('toggle-milestone');
+const milestoneSection = document.querySelector('.milestone-section');
+
+toggleBtn.addEventListener('click', () => {
+  const collapsed = milestoneSection.classList.toggle('collapsed');
+  toggleBtn.textContent = collapsed ? '🔽 顯示里程碑' : '🔼 收起里程碑';
+});
+
