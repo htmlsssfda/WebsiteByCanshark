@@ -1,0 +1,271 @@
+/* ===== 全局樣式 ===== */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body.light {
+  background: #f3f3f3;
+  color: #000;
+}
+
+body.dark {
+  background: #121212;
+  color: #fff;
+}
+
+body.superdark {
+  background: #000;
+  color: #ccc;
+}
+
+/* 主題按鈕 */
+#theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+  color: inherit;
+  background: transparent;
+  border: none;
+}
+
+/* ===== 表單容器（登入 / 註冊）===== */
+.form-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.3s, color 0.3s;
+}
+
+.form-container h2 {
+  margin-bottom: 1rem;
+}
+
+/* ===== 輸入框與按鈕 ===== */
+input[type="text"],
+input[type="password"] {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background: inherit;
+  color: inherit;
+}
+
+button {
+  padding: 10px 20px;
+  background: #007bff;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+/* ===== 標籤與連結 ===== */
+label {
+  margin: 10px 0;
+  font-size: 0.9rem;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===== 登入 / 註冊底部文字 ===== */
+.form-container p {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+/* ===== 聊天室頁面樣式 ===== */
+.chat-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+.chat-header {
+  background: #4a90e2;
+  color: white;
+  padding: 1rem;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-user-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.username {
+  font-size: 0.9rem;
+}
+
+.logout-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#chat-box {
+  height: 300px;
+  overflow-y: auto;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  background: inherit;
+  color: inherit;
+}
+
+.chat-input {
+  display: flex;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: inherit;
+  color: inherit;
+  border-top: 1px solid #ccc;
+}
+
+.chat-input button {
+  padding: 10px 20px;
+  border: none;
+  background: #4a90e2;
+  color: white;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background: #3578c5;
+}
+
+/* ===== 響應式支援 (手機適配) ===== */
+@media (max-width: 400px) {
+  .form-container {
+    width: 90%;
+  }
+
+  .chat-container {
+    margin: 10px;
+  }
+
+  .chat-header,
+  #chat-box,
+  .chat-input {
+    font-size: 0.9rem;
+  }
+}
+
+.main-layout {
+  display: flex;
+  gap: 20px;
+  max-width: 1000px;
+  width: 95%;
+  margin: auto;
+  align-items: flex-start;
+}
+
+/* 個人資訊側邊欄樣式 */
+.sidebar {
+  flex-shrink: 0;
+  width: 250px;
+  background: var(--chat-bg);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  color: var(--text);
+  height: fit-content;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.sidebar p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+/* 響應式處理：手機改為上下排 */
+@media (max-width: 768px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .chat-container {
+    width: 100%;
+  }
+}
+
+#command-hint {
+  position: absolute;
+  background: #222;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  max-width: 300px;
+  line-height: 1.6;
+  display: none;
+}

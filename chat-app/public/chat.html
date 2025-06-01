@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>聊天室</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f0f2f5;
+      --text: #000;
+      --chat-bg: #fff;
+      --chatbox-bg: #fafafa;
+      --input-bg: #fff;
+      --btn-bg: #4a90e2;
+      --btn-text: #fff;
+      --btn-hover: #357ac9;
+    }
+    body.light {
+      --bg: #f0f2f5;
+      --text: #000;
+      --chat-bg: #fff;
+      --chatbox-bg: #fafafa;
+      --input-bg: #fff;
+      --btn-bg: #4a90e2;
+      --btn-text: #fff;
+      --btn-hover: #357ac9;
+    }
+    body.dark {
+      --bg: #121212;
+      --text: #fff;
+      --chat-bg: #1e1e1e;
+      --chatbox-bg: #222;
+      --input-bg: #2a2a2a;
+      --btn-bg: #333;
+      --btn-text: #fff;
+      --btn-hover: #444;
+    }
+    body.superdark {
+      --bg: #000;
+      --text: #ccc;
+      --chat-bg: #000;
+      --chatbox-bg: #111;
+      --input-bg: #111;
+      --btn-bg: #222;
+      --btn-text: #ccc;
+      --btn-hover: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Microsoft JhengHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    #theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      z-index: 1000;
+    }
+
+    .main-layout {
+      display: flex;
+      gap: 20px;
+      max-width: 1000px;
+      width: 95%;
+      margin: auto;
+      align-items: flex-start;
+      padding-top: 60px;
+    }
+
+    .chat-container {
+      background: var(--chat-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-user-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    #chat-box {
+      flex: 1;
+      padding: 1rem;
+      background: var(--chatbox-bg);
+      overflow-y: auto;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+      padding: 0.5rem;
+      background: var(--chatbox-bg);
+      gap: 0.5rem;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: var(--input-bg);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .chat-input button {
+      padding: 10px 20px;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .chat-input button:hover {
+      background: var(--btn-hover);
+    }
+
+    .sidebar {
+      flex-shrink: 0;
+      width: 250px;
+      background: var(--chat-bg);
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .main-layout {
+        flex-direction: column;
+      }
+      .sidebar, .chat-container {
+        width: 100%;
+      }
+    }
+
+    #command-hint {
+      position: absolute;
+      background: var(--chatbox-bg);
+      color: var(--text);
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 0.5rem;
+      margin-top: 5px;
+      display: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="theme-toggle" title="切換主題">
+    <i id="theme-icon" class="ri-sun-line"></i>
+  </div>
+
+  <div class="main-layout">
+    <div class="chat-container">
+      <div class="chat-header">
+        <span>聊天室</span>
+        <div class="chat-user-controls">
+          <span>使用者：<span id="username-display"></span></span>
+          <button onclick="logout()">登出</button>
+        </div>
+      </div>
+      <div id="chat-box"></div>
+      <div class="chat-input">
+        <input type="text" id="message" placeholder="輸入訊息..." autocomplete="off" />
+        <button id="send">送出</button>
+        <div id="command-hint"></div>
+      </div>
+    </div>
+    <div class="sidebar">
+      <h3>個人檔案</h3>
+      <p><strong>使用者：</strong><span id="profile-username"></span></p>
+      <p><strong>主題：</strong><span id="profile-theme"></span></p>
+      <p><strong>登入時間：</strong><span id="profile-login-time"></span></p>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const adminUsers = ["admin", "Sub2Canshark"]; // 這裡填入你的管理帳戶名字
+    const socket = io();
+    const chatBox = document.getElementById("chat-box");
+    const input = document.getElementById("message");
+    const send = document.getElementById("send");
+    const hintBox = document.getElementById("command-hint");
+
+    const user = localStorage.getItem("chatUser") || sessionStorage.getItem("chatUser");
+    if (!user) {
+      window.location.href = "login.html";
+    } else {
+      document.getElementById("username-display").textContent = user;
+      document.getElementById("profile-username").textContent = user;
+      document.getElementById("profile-theme").textContent = localStorage.getItem("theme") || "light";
+      document.getElementById("profile-login-time").textContent = new Date().toLocaleString();
+    }
+
+    function logout() {
+      localStorage.removeItem("chatUser");
+      sessionStorage.removeItem("chatUser");
+      window.location.href = "login.html";
+    }
+
+    function sendMessage() {
+  const msg = input.value.trim();
+  const hintBox = document.getElementById("command-hint");
+  if (!msg) return;
+
+  // 判斷是否是指令
+  if (msg.startsWith("/")) {
+    const command = commands.find(c => c.cmd === msg);
+
+    if (command) {
+      // 如果是管理員指令但不是管理員
+      const isAdmin = adminUsers.includes(user);
+      if (command.adminOnly && !isAdmin) {
+        const div = document.createElement("div");
+        div.textContent = "[系統] 此指令僅限管理員使用。";
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        input.value = "";
+        hintBox.style.display = "none";
+        return;
+      }
+
+      // 執行指令功能
+      if (msg === "/clear") {
+        chatBox.innerHTML = "";
+      }
+
+      if (msg === "/help") {
+        const helpText = commands.map(c => {
+          return c.adminOnly ? `${c.cmd}（管理員）: ${c.desc}` : `${c.cmd}: ${c.desc}`;
+        });
+
+        helpText.forEach(line => {
+          const div = document.createElement("div");
+          div.textContent = `[系統] ${line}`;
+          chatBox.appendChild(div);
+        });
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      input.value = "";
+      hintBox.style.display = "none";
+      return;
+    }
+  }
+
+  // 一般訊息發送
+  socket.emit("chat message", `${user}: ${msg}`);
+  input.value = "";
+  hintBox.style.display = "none";
+}
+
+
+    send.onclick = sendMessage;
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    fetch("/history")
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(log => {
+          const div = document.createElement("div");
+          div.textContent = log.message;
+          chatBox.appendChild(div);
+        });
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
+
+    socket.on("chat message", msg => {
+      const div = document.createElement("div");
+      div.textContent = msg;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
+
+    const theme = localStorage.getItem("theme") || "light";
+    document.body.classList.add(theme);
+    setIcon(theme);
+
+    function setIcon(theme) {
+      const icon = document.getElementById("theme-icon");
+      icon.className = theme === "light" ? "ri-moon-line" : "ri-sun-line";
+    }
+
+    const toggleBtn = document.getElementById("theme-toggle");
+    let holdTimer;
+
+    toggleBtn.addEventListener("click", () => {
+      let current = document.body.classList.contains("light") ? "light" :
+                    document.body.classList.contains("dark") ? "dark" : "superdark";
+      let next = current === "light" ? "dark" : "light";
+      document.body.classList.replace(current, next);
+      localStorage.setItem("theme", next);
+      setIcon(next);
+      document.getElementById("profile-theme").textContent = next;
+    });
+
+    toggleBtn.addEventListener("mousedown", () => {
+      holdTimer = setTimeout(() => {
+        if (document.body.classList.contains("dark")) {
+          document.body.classList.replace("dark", "superdark");
+          localStorage.setItem("theme", "superdark");
+          setIcon("dark");
+          document.getElementById("profile-theme").textContent = "superdark";
+        }
+      }, 2000);
+    });
+
+    ["mouseup", "mouseleave"].forEach(e => toggleBtn.addEventListener(e, () => clearTimeout(holdTimer)));
+
+    const commands = [
+  { cmd: "/clear", desc: "清除所有聊天訊息", adminOnly: true },
+  { cmd: "/help", desc: "顯示所有指令說明", adminOnly: false }
+];
+
+
+    input.addEventListener("input", () => {
+  const value = input.value.trim();
+  if (value.startsWith("/")) {
+    const matched = commands.filter(c => c.cmd.startsWith(value));
+    
+    if (matched.length) {
+      // 若完全匹配，隱藏提示
+      const exactMatch = commands.find(c => c.cmd === value);
+      if (exactMatch) {
+        hintBox.style.display = "none";
+        return;
+      }
+
+      // 顯示提示清單
+      hintBox.innerHTML = matched.map(c => `<div><strong>${c.cmd}</strong> - ${c.desc}</div>`).join("");
+      const rect = input.getBoundingClientRect();
+      hintBox.style.left = `${rect.left}px`;
+      hintBox.style.top = `${rect.top - 60}px`;
+      hintBox.style.display = "block";
+    } else {
+      hintBox.style.display = "none";
+    }
+  } else {
+    hintBox.style.display = "none";
+  }
+});
+
+  </script>
+</body>
+</html>

@@ -330,6 +330,15 @@ button {
   margin-bottom: 0.5rem;
 }
 
+.section-title {
+  width: 100%;
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 2rem 0 1rem;
+  color: #333;
+}
+
+
 
 .profile {
   width: 150px;

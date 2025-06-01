@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>登入</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="form-container">
+    <h2>登入</h2>
+    <input type="text" id="username" placeholder="使用者名稱">
+    <input type="password" id="password" placeholder="密碼">
+    <label><input type="checkbox" id="remember"> 記住我</label>
+    <button onclick="login()">登入</button>
+    <p>還沒帳戶？<a href="register.html">註冊</a></p>
+  </div>
+
+  <script>
+    // 檢查是否已經登入過
+function login() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
+  const remember = document.getElementById("remember").checked;
+
+  if (username && password) {
+    // 儲存使用者資訊
+    if (remember) {
+      localStorage.setItem("chatUser", username); // 長期儲存
+    } else {
+      sessionStorage.setItem("chatUser", username); // 僅這次開啟有效
+    }
+
+    window.location.href = "chat.html";
+  } else {
+    alert("請輸入帳號與密碼");
+  }
+}
+
+
+  </script>
+</body>
+</html>
